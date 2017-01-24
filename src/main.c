@@ -2,9 +2,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include "window.h"
+#include "mesh.c"
 
 int main(int argc, char** argv) {
   struct Window* window = window_new("", 800, 600);
+
+  struct GpuMesh* mesh = gpu_mesh_load_obj("data/sphere.obj");
 
   int run = 1;
   while(run) {

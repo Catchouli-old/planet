@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 
 set(SOURCES
   src/main.c
+  src/window.c
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

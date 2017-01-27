@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+#include <GL/glew.h>
 #include "window.h"
 #include "mesh.c"
 
 int main(int argc, char** argv) {
   struct Window* window = window_new("", 800, 600);
+
+  GLenum err = glewInit();
+  if (err != GLEW_OK) {
+    fprintf(stderr, "Failed to initialise glew: %s\n", glewGetErrorString(err));
+  }
 
   struct GpuMesh* mesh = gpu_mesh_load_obj("data/sphere.obj");
 
@@ -23,6 +28,9 @@ int main(int argc, char** argv) {
     // Render
     glClearColor(0,0,0,1);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    gpu_mesh_draw(mesh);
+
     window_swap(window);
   }
 

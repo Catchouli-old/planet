@@ -103,3 +103,62 @@ void matrix_print(const mat4f* a) {
   printf("Translation: %f %f %f\n", a->j[3].i[0], a->j[3].i[1], a->j[3].i[2]);
   printf("Translation: %f %f %f\n", a->m[12], a->m[13], a->m[14]);
 }
+
+mat4f mfrustum(float left, float right, float bottom,
+               float top, float nearVal, float farVal) {
+  mat4f res = {0};
+  res.j[0].i[0] = (2.0f * nearVal) / (right - left);
+  res.j[1].i[1] = (2.0f * nearVal) / (top - bottom);
+  res.j[2].i[0] = (right + left) / (right - left);
+  res.j[2].i[1] = (top + bottom) / (top - bottom);
+  res.j[2].i[3] = -1.0f;
+
+  res.j[2].i[2] = farVal / (nearVal - farVal);
+  res.j[3].i[2] = -(farVal * nearVal) / (farVal - nearVal);
+
+  return res;
+}
+
+mat4f mid() {
+  mat4f res = {0};
+  res.j[0].i[0] = 1.0f;
+  res.j[1].i[1] = 1.0f;
+  res.j[2].i[2] = 1.0f;
+  res.j[3].i[3] = 1.0f;
+  return res;
+}
+
+mat4f mtranslate(const mat4f* m, float x, float y, float z) {
+  mat4f v = *m;
+  v.j[3].i[0] += x;
+  v.j[3].i[1] += y;
+  v.j[3].i[2] += z;
+  return mmulm(&v, m);
+}
+
+mat4f mrotatex(const mat4f* m, float angle) {
+  mat4f v = mid();
+  v.j[1].i[1] = cos(angle);
+  v.j[2].i[1] = sin(angle);
+  v.j[1].i[2] = -v.j[2].i[1];
+  v.j[2].i[2] = v.j[1].i[1];
+  return mmulm(&v, m);
+}
+
+mat4f mrotatey(const mat4f* m, float angle) {
+  mat4f v = mid();
+  v.j[0].i[0] = cos(angle);
+  v.j[0].i[2] = sin(angle);
+  v.j[2].i[0] = -v.j[0].i[2];
+  v.j[2].i[2] = v.j[0].i[0];
+  return mmulm(&v, m);
+}
+
+mat4f mrotatez(const mat4f* m, float angle) {
+  mat4f v = mid();
+  v.j[0].i[0] = cos(angle);
+  v.j[1].i[0] = sin(angle);
+  v.j[0].i[1] = -v.j[1].i[0];
+  v.j[1].i[1] = v.j[0].i[0];
+  return mmulm(&v, m);
+}

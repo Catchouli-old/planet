@@ -47,6 +47,9 @@ vec4f vmulv(const vec4f* a, const vec4f* b);
 /// Matrix equality
 int ameq(const mat4f* a, const mat4f* b);
 
+/// Get an identity matrix
+mat4f mid();
+
 // Multiplication of a column-major matrix and a vector
 vec4f mmulv(const mat4f* a, const vec4f* b);
 
@@ -55,5 +58,21 @@ mat4f mmulm(const mat4f* a, const mat4f* b);
 
 /// Print a matrix
 void matrix_print(const mat4f* a);
+
+/// Construct a perspective projection
+mat4f mfrustum(float left, float right, float bottom,
+               float top, float nearVal, float farVal);
+
+/// Translate a matrix
+mat4f mtranslate(const mat4f* m, float x, float y, float z);
+
+/// Rotate a matrix about the x axis
+mat4f mrotatex(const mat4f* m, float angle);
+
+/// Rotate a matrix about the y axis
+mat4f mrotatey(const mat4f* m, float angle);
+
+/// Rotate a matrix about the z axis
+mat4f mrotatez(const mat4f* m, float angle);
 
 #endif

@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 #include "window.h"
-#include "mesh.c"
+#include "mesh.h"
 
 int main(int argc, char** argv) {
   struct Window* window = window_new("", 800, 600);

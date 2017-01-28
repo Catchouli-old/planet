@@ -62,6 +62,7 @@ struct GpuMesh* gpu_mesh_load_obj(const char* filename) {
       printf("Unrecognised obj entry: %s", buf);
     }
   }
+  fclose(fd);
 
   const int pos_count = sb_count(positions);
   const int nrm_count = sb_count(normals);
@@ -117,7 +118,6 @@ struct GpuMesh* gpu_mesh_load_obj(const char* filename) {
   sb_free(normals);
   sb_free(indices);
 
-  fclose(fd);
   return mesh;
 }
 
